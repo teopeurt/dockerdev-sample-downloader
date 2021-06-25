@@ -1,8 +1,6 @@
 FROM golang
 
 # Getting backend port from env
-ARG PORT_API
-ENV PORT=$PORT_API
 
 # Creating production user
 RUN useradd -ms /bin/bash prod
@@ -21,11 +19,11 @@ RUN curl -L https://yt-dl.org/downloads/latest/youtube-dl -o /usr/local/bin/yout
 USER prod
 
 # Exposing backend port
-EXPOSE $PORT
+EXPOSE 8090
 
 # Installing Go deps
 WORKDIR /video-downloader
 RUN go mod download
 
 # Running server
-CMD go run server.go $PORT
+CMD go run server.go 8090
